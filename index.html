@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>testpage</title>       
+			<script type='text/javascript'>
+				/**********************
+				player 1 or 2
+				**********************/
+				var g_player = 0; // 1=blue or 0=red
+				var g_id = 0;
+				var g_cellNum = 0;
+				var gGameWon = false;
+				var moveCtr = 0;
+				var g_cells = new Array(43);
+				
+				/*for(var a = 1; a < 43; a++)	
+				{
+					g_cells[a] = '-';
+				}
+				*/
+				var col_1 = new Array(6);
+				var col_1_ctr = 1;
+				col_1 = [' ','36','29','22','15','8','1'];
+				
+				var col_2 = new Array(6);
+				var col_2_ctr = 1;
+				col_2 = [' ','37','30','23','16','9','2'];
+				
+				var col_3 = new Array(6);
+				var col_3_ctr = 1;
+				col_3 = [' ','38','31','24','17','10','3'];
+				
+				var col_4 = new Array(6);
+				var col_4_ctr = 1;
+				col_4 = [' ','39','32','25','18','11','4'];
+				
+				var col_5 = new Array(6);
+				var col_5_ctr = 1;
+				col_5 = [' ','40','33','26','19','12','5'];
+				
+				var col_6 = new Array(6);
+				var col_6_ctr = 1;
+				col_6 = [' ','41','34','27','20','13','6'];
+				
+				var col_7 = new Array(6);
+				var col_7_ctr = 1;
+				col_7 = [' ','42','35','28','21','14','7'];
+				
+				function changePlayer()
+				{
+					g_player = !(g_player);
+					//alert("player = " + g_player);
+				}
+
+				function checkWinner()
+				{
+				//
+				//	All possible winning combinations
+				//
+					
+					var win = new Array(62);
+					win[1] = ['36','29','22','15'];					
+					win[2] = ['29','22','15','8'];
+					win[3] = ['22','15','8','1'];
+
+					win[4] = ['37','30','23','16'];
+					win[5] = ['30','23','16','9'];
+					win[6] = ['23','16','9','2'];
+
+					win[7] = ['38','31','24','17'];
+					win[8] = ['31','24','17','10'];
+					win[9] = ['24','17','10','3'];
+
+					win[10] = ['39','32','25','18'];
+					win[11] = ['32','25','18','11'];
+					win[12] = ['25','18','11','4'];
+
+					win[13] = ['40','33','26','19'];
+					win[14] = ['33','26','19','12'];
+					win[15] = ['26','19','12','5'];
+
+					win[16] = ['41','34','27','20'];
+					win[17] = ['34','27','20','13'];
+					win[18] = ['27','20','13','6'];
+
+					win[19] = ['36','37','38','39'];
+					win[20] = ['37','38','39','40'];
+					win[21] = ['38','39','40','41'];
+					win[22] = ['39','40','41','42'];
+
+					win[23] = ['1','2','3','4'];
+					win[24] = ['2','3','4','5'];
+					win[25] = ['3','4','5','6'];
+					win[26] = ['4','5','6','7'];
+
+					win[27] = ['22','16','10','4'];
+					win[28] = ['29','23','17','11'];
+					win[29] = ['36','30','24','18'];
+					win[30] = ['23','17','11','5'];
+					win[31] = ['24','18','12','6'];
+					win[32] = ['31','25','19','13'];
+					win[33] = ['32','26','20','14'];
+
+					win[34] = ['25','19','13','7'];
+					win[35] = ['39','31','23','15'];
+					win[36] = ['40','32','24','16'];
+					win[37] = ['41','33','25','17'];
+					win[38] = ['42','34','26','18'];
+					win[39] = ['35','27','19','11'];
+					win[40] = ['28','20','12','4'];
+
+					win[41] = ['32','24','16','8'];
+					win[42] = ['33','25','17','9'];
+					win[43] = ['34','26','18','10'];
+					win[44] = ['27','19','11','1'];
+					win[45] = ['25','17','9','1'];
+					win[46] = ['26','18','10','2'];
+
+					win[48] = ['29','30','31','32'];
+					win[49] = ['22','23','24','25'];
+					win[50] = ['15','16','17','18'];
+					win[51] = ['8','9','10','11'];
+					win[52] = ['30','31','32','33'];
+					win[53] = ['23','24','25','26'];
+					win[54] = ['16','17','18','19'];
+					win[55] = ['9','10','11','12'];
+
+					win[56] = ['31','32','33','34'];
+					win[57] = ['24','25','26','27'];
+					win[58] = ['17','18','19','20'];
+					win[59] = ['10','11','12','13'];
+					win[60] = ['32','33','34','35'];
+					win[61] = ['25','26','27','28'];
+					win[62] = ['18','19','20','21'];
+					win[63] = ['11','12','13','14'];				
+					
+					var nCombinations = 63;					
+					var ctrWin = 4;			
+					var ctrEqual = 0;					
+					//console.log(g_player);
+					var a = 0;
+					var b = 0;
+					var bEqual = true;
+					for(a = 1; a < 63; a++)
+					{				
+						ctrEqual = 0;
+						
+						for(b = 0; b < 4; b++)
+						{
+							//if(win[a][b]==g_player)
+							//	ctrEqual++;
+							if(g_cells[win[a][b]]==g_player){							
+								ctrEqual++;			
+								//bEqual = false;							
+							}
+							console.log(win[a][b]);
+							//console.log(ctrEqual);
+						}
+						
+						if(ctrWin==ctrEqual){
+							if(g_player)
+								alert("Player 1 won!");
+							else
+								alert("Player 2 won!");
+								
+							gGameWon = true;
+							break;
+						}
+						
+						/*
+				
+						for( var b = 0; b < 4; b++)
+						{
+							if(win[a][b] !== win[a][0])
+								bEqual = false;
+						}	
+						*/
+							
+						//if(ctrWin==ctrEqual)
+							//alert("Win!");
+
+					}			
+					
+					//if(ctrWin==ctrEqual)
+						//alert("Win!");
+						
+					//console.log(g_cells[36] + " " + g_cells[29] + " " + g_cells[22] + " " + g_cells[15]);
+						
+					//if(ctrWin==4)
+						//alert("Win!");
+						//alert(g_cells[36] + " " + g_cells[29] + " " + g_cells[22] + " " + g_cells[15]);
+						//alert(g_cells[29]);
+						//alert(g_cells[22]);
+						//alert(g_cells[15]);
+				}
+				
+				function checkFull(id)
+				{
+					changePlayer();
+					switch(id)
+					{
+						case '1': case '8': case '15':
+						case '22': case '29': case '36':
+						if(col_1_ctr <= 6)
+						{
+							//alert("col ctr = " + col_1_ctr);
+							//col_1[col_1_ctr] = 'x';
+							//col_1_ctr++;
+							//alert(col_1[col_1_ctr]);
+							//document.getElementById(col_1[col_1_ctr]).style.backgroundColor='blue';
+							g_cellNum = col_1[col_1_ctr];
+							g_cells[g_cellNum] = g_player;
+							col_1_ctr++;
+						}
+						
+						break;
+						
+						case '2': case '9': case '16':
+						case '23': case '30': case '37':
+						if(col_2_ctr <= 6)
+						{
+							g_cellNum = col_2[col_2_ctr];
+							g_cells[g_cellNum] = g_player;
+							col_2_ctr++;
+						}							
+						break;
+						
+						case '3': case '10': case '17':
+						case '24': case '31': case '38':
+						if(col_3_ctr <= 6)
+						{
+							g_cellNum = col_3[col_3_ctr];
+							g_cells[g_cellNum] = g_player;
+							col_3_ctr++;
+						}
+						break;
+						
+						case '4': case '11': case '18':
+						case '25': case '32': case '39':
+						if(col_4_ctr <= 6)
+						{
+							g_cellNum = col_4[col_4_ctr];
+							g_cells[g_cellNum] = g_player;
+							col_4_ctr++;
+						}
+						break;
+						
+						case '5': case '12': case '19':
+						case '26': case '33': case '40':
+						if(col_5_ctr <= 6)
+						{
+							g_cellNum = col_5[col_5_ctr];
+							g_cells[g_cellNum] = g_player;
+							col_5_ctr++;
+						}
+						break;
+						
+						case '6': case '13': case '20':
+						case '27': case '34': case '41':
+						if(col_6_ctr <= 6)
+						{
+							g_cellNum = col_6[col_6_ctr];
+							g_cells[g_cellNum] = g_player;
+							col_6_ctr++;
+						}
+						break;		
+						
+						case '7': case '14': case '21':
+						case '28': case '35': case '42':
+						if(col_7_ctr <= 6)
+						{
+							g_cellNum = col_7[col_7_ctr];
+							g_cells[g_cellNum] = g_player;
+							col_7_ctr++;
+						}
+						break;			
+						
+						default:
+						break;
+					}
+					
+					moveCtr++;
+					
+					if(moveCtr==42){
+						alert("The game is tied!");	
+						gGameWon = true;						
+					}
+					
+					var color = 'red';
+					if(g_player)
+						color ='blue';
+					document.getElementById(g_cellNum).style.backgroundColor=color;
+					
+							
+					checkWinner();
+					
+				}
+					
+				function processId(id)
+				{
+				
+					if(!gGameWon){
+						g_id = id;
+						checkFull(id);						
+					}
+					
+				
+				}							
+				
+			</script>
+    </head>
+    <body>
+			
+			<table border="1" width="190">    
+				<tr> 
+					<td class="navigateTest" id="1" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="2" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="3" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="4" height="30" onclick="processId(id)"> </td> 		
+					<td class="navigateTest" id="5" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="6" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="7" height="30" onclick="processId(id)"> </td> 		
+				</tr>
+				<tr> 
+					<td class="navigateTest" id="8" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="9" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="10" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="11" height="30" onclick="processId(id)"> </td> 		
+					<td class="navigateTest" id="12" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="13" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="14" height="30" onclick="processId(id)"> </td> 		
+				</tr>
+				<tr> 
+					<td class="navigateTest" id="15" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="16" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="17" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="18" height="30" onclick="processId(id)"> </td> 		
+					<td class="navigateTest" id="19" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="20" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="21" height="30" onclick="processId(id)"> </td> 		
+				</tr>	
+				<tr> 
+					<td class="navigateTest" id="22" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="23" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="24" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="25" height="30" onclick="processId(id)"> </td> 		
+					<td class="navigateTest" id="26" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="27" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="28" height="30" onclick="processId(id)"> </td> 		
+				</tr>	
+				<tr> 
+					<td class="navigateTest" id="29" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="30" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="31" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="32" height="30" onclick="processId(id)"> </td> 		
+					<td class="navigateTest" id="33" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="34" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="35" height="30" onclick="processId(id)"> </td> 		
+				</tr>		
+				<tr> 
+					<td class="navigateTest" id="36" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="37" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="38" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="39" height="30" onclick="processId(id)"> </td> 		
+					<td class="navigateTest" id="40" height="30" onclick="processId(id)"> </td>    
+					<td class="navigateTest" id="41" height="30" onclick="processId(id)"> </td> 
+					<td class="navigateTest" id="42" height="30" onclick="processId(id)"> </td> 		
+				</tr>		
+				
+			</table>
+
+    </body>
+</html>
